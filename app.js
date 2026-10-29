@@ -1,5 +1,5 @@
 /* David Gooding Inc. Christmas board.
-   One interval for the life of the page. Snow, lights, and the sleigh
+   One interval for the life of the page. Snow, lights, and scene motion
    are a fixed set of elements driven by CSS. Nothing grows the DOM. */
 (function () {
   var params = new URLSearchParams(location.search);
