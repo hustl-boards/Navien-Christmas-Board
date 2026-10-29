@@ -4,206 +4,37 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#213C70">
+  <meta name="board-version" content="20261029c">
   <title>Merry Christmas from David Gooding Inc.</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect fill='%23213C70' width='16' height='16'/%3E%3Ccircle fill='%23F6E455' cx='8' cy='8' r='3'/%3E%3C/svg%3E">
   <link rel="preload" href="assets/fonts/outfit-800.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/outfit-500.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/photos/tree.jpg" as="image">
   <link rel="preload" href="assets/dgi-logo.png" as="image">
-  <link rel="stylesheet" href="styles.css?v=20261029b">
+  <link rel="stylesheet" href="styles.css?v=20261029c">
 </head>
 <body>
   <main id="board" data-scene="greet" aria-label="David Gooding Inc. Christmas board">
-    <div id="stars" aria-hidden="true"></div>
-    <div id="snow" aria-hidden="true"></div>
-
     <section class="scene scene-greet is-active" data-scene="greet">
-      <div class="garland" aria-hidden="true">
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      </div>
+      <div class="photo kb-a" aria-hidden="true"><img src="assets/photos/tree.jpg" alt=""></div>
+      <div class="veil" aria-hidden="true"></div>
       <div class="copy">
-        <h1>Merry Christmas</h1>
-        <p class="lead">from David Gooding Inc.</p>
-        <div class="logo-row">
-          <div class="logo-plate">
-            <img class="dgi" src="assets/dgi-logo.png" width="190" height="68" alt="David Gooding Inc.">
-          </div>
-        </div>
-        <p class="sub">Wishing our customers and partners a merry Christmas.</p>
-        <div class="mini-gifts" aria-hidden="true"><i class="red"></i><i class="gold"></i><i class="green"></i></div>
-      </div>
-      <p class="credit">A holiday hello from Ross Hunt · 3R Plumbing &amp; Mechanical</p>
-    </section>
-
-    <section class="scene scene-tree split" data-scene="tree">
-      <div class="art">
-        <div class="tree-wrap">
-          <svg class="tree" viewBox="0 0 640 860" aria-hidden="true">
-            <ellipse cx="320" cy="820" rx="240" ry="26" fill="#E7F0FA"/>
-            <polygon points="320,70 455,250 400,250 520,420 395,420 590,640 50,640 245,420 120,420 240,250 185,250" fill="#0E4A32"/>
-            <polygon points="320,150 430,280 210,280" fill="#167A48"/>
-            <polygon points="320,300 500,500 140,500" fill="#1B6B40"/>
-            <polygon points="300,250 320,210 360,255" fill="#F7FBFF" opacity=".9"/>
-            <polygon points="250,420 320,360 400,425" fill="#F7FBFF" opacity=".75"/>
-            <polygon points="320,28 334,64 372,66 342,90 350,128 320,106 290,128 298,90 268,66 306,64" fill="#F6E455"/>
-            <rect x="292" y="628" width="56" height="92" rx="6" fill="#6A4124"/>
-            <g class="bulbs">
-              <circle class="bulb" cx="320" cy="210" r="9" fill="#C4312E"/>
-              <circle class="bulb" cx="250" cy="300" r="8" fill="#F6E455"/>
-              <circle class="bulb" cx="400" cy="330" r="8" fill="#C4312E"/>
-              <circle class="bulb" cx="180" cy="430" r="9" fill="#F6E455"/>
-              <circle class="bulb" cx="470" cy="450" r="9" fill="#213C70"/>
-              <circle class="bulb" cx="320" cy="470" r="8" fill="#C4312E"/>
-              <circle class="bulb" cx="140" cy="560" r="9" fill="#F6E455"/>
-              <circle class="bulb" cx="500" cy="570" r="9" fill="#C4312E"/>
-              <circle class="bulb" cx="300" cy="600" r="8" fill="#F6E455"/>
-            </g>
-          </svg>
-          <div class="ornament o1"><i></i><span class="badge"><img src="assets/brands/elkay.jpg" alt="Elkay"></span></div>
-          <div class="ornament o2"><i></i><span class="badge"><img src="assets/brands/heat-flo.jpg" alt="Heat-Flo"></span></div>
-          <div class="ornament o3"><i></i><span class="badge"><img src="assets/brands/roth.png" alt="Roth"></span></div>
-          <div class="ornament o4"><i></i><span class="badge"><img src="assets/brands/zurn.png" alt="Zurn"></span></div>
-          <div class="ornament o5"><i></i><span class="badge"><img src="assets/brands/navien.jpg" alt="Navien"></span></div>
-          <div class="ornament o6"><i></i><span class="badge"><img src="assets/brands/nibco.jpg" alt="NIBCO"></span></div>
-          <div class="ornament o7"><i></i><span class="badge"><img src="assets/brands/elbi.jpg" alt="Elbi of America"></span></div>
-          <div class="ornament o8"><i></i><span class="badge"><img src="assets/brands/multi-fittings.png" alt="Multi Fittings"></span></div>
-        </div>
-      </div>
-      <div class="copy">
-        <p class="kicker">Deck the halls</p>
-        <h1>The tree is up</h1>
-        <p class="lead">Trimmed with our partners.</p>
-        <p class="sub">Merry Christmas from David Gooding Inc.</p>
-      </div>
-    </section>
-
-    <section class="scene scene-santa" data-scene="santa">
-      <div class="copy santa-copy">
-        <p class="kicker">Christmas Eve</p>
-        <h1>Santa's on his way</h1>
-        <p class="lead">A sack full of partner gifts.</p>
-      </div>
-      <div class="santa-art floaty">
-        <svg class="santa-svg" viewBox="0 0 1800 680" aria-hidden="true">
-          <circle cx="120" cy="70" r="42" fill="#F6E455"/>
-          <circle cx="104" cy="62" r="8" fill="#E8C56A" opacity=".45"/>
-          <defs>
-            <symbol id="deer" viewBox="0 0 300 290">
-              <path d="M118 86 C96 36 70 30 58 12 M110 78 C86 40 96 16 78 4 M140 74 C164 30 158 14 180 6 M146 80 C176 42 196 36 214 22" stroke="#6A4124" stroke-width="6" fill="none" stroke-linecap="round"/>
-              <ellipse cx="150" cy="108" rx="36" ry="26" fill="#E4C09A"/>
-              <ellipse cx="122" cy="92" rx="12" ry="18" fill="#D7B08A"/>
-              <circle cx="182" cy="112" r="9" fill="#8A6244"/>
-              <circle cx="160" cy="102" r="4" fill="#213C70"/>
-              <path d="M138 128 C124 168 150 196 186 204" stroke="#E4C09A" stroke-width="28" fill="none" stroke-linecap="round"/>
-              <ellipse cx="220" cy="210" rx="78" ry="30" fill="#E4C09A"/>
-              <circle cx="150" cy="198" r="14" fill="#F7E7D2"/>
-              <g stroke="#C49A72" stroke-width="8" stroke-linecap="round" fill="none">
-                <path d="M168 228 V272"/>
-                <path d="M198 232 V278"/>
-                <path d="M236 230 V276"/>
-                <path d="M266 224 V268"/>
-              </g>
-            </symbol>
-          </defs>
-          <use href="#deer" xlink:href="#deer" x="8" y="150" width="330" height="319"/>
-          <use href="#deer" xlink:href="#deer" x="230" y="112" width="330" height="319"/>
-          <use href="#deer" xlink:href="#deer" x="450" y="158" width="330" height="319"/>
-          <circle cx="668" cy="281" r="11" fill="#C4312E"/>
-          <path d="M520 340 C 700 300 820 340 900 390" stroke="#F6E455" stroke-width="5" fill="none" stroke-linecap="round"/>
-          <path d="M360 360 C 560 330 760 360 880 410" stroke="#E8C56A" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <g transform="translate(760,250)">
-            <path d="M30 150 C20 80 80 40 170 36 H 340 C 420 36 450 90 430 160 L 400 210 H 80 C 30 210 20 180 30 150 Z" fill="#C4312E"/>
-            <path d="M78 92 H 392" stroke="#F6E455" stroke-width="8" stroke-linecap="round"/>
-            <path d="M8 228 H 470" stroke="#E8C56A" stroke-width="10" stroke-linecap="round"/>
-            <path d="M36 228 C 4 270 48 292 84 268" stroke="#E8C56A" stroke-width="10" fill="none" stroke-linecap="round"/>
-            <path d="M424 228 C 478 270 430 300 386 270" stroke="#E8C56A" stroke-width="10" fill="none" stroke-linecap="round"/>
-            <g transform="translate(145,-8)">
-              <circle cx="80" cy="24" r="32" fill="#F3C7A5"/>
-              <path d="M52 12 Q80 -36 124 6 L98 30 Z" fill="#C4312E"/>
-              <circle cx="124" cy="4" r="10" fill="#fff"/>
-              <path d="M50 28 Q82 70 116 26" fill="#fff"/>
-              <circle cx="66" cy="18" r="3.5" fill="#213C70"/>
-              <circle cx="94" cy="16" r="3.5" fill="#213C70"/>
-              <path d="M70 32 Q84 40 98 30" stroke="#C47A6A" stroke-width="3" fill="none" stroke-linecap="round"/>
-              <rect x="40" y="52" width="86" height="102" rx="20" fill="#C4312E"/>
-              <rect x="40" y="98" width="86" height="16" fill="#1A120E"/>
-              <rect x="71" y="92" width="24" height="28" rx="4" fill="#F6E455"/>
-              <rect x="26" y="142" width="112" height="18" rx="8" fill="#fff"/>
-              <path d="M122 74 Q168 40 156 96" stroke="#C4312E" stroke-width="22" fill="none" stroke-linecap="round"/>
-              <circle cx="156" cy="98" r="12" fill="#F3C7A5"/>
-            </g>
-          </g>
-          <path d="M1180 90 C 1100 150 1080 280 1120 450 C 1160 590 1280 640 1480 640 C 1700 640 1768 520 1768 370 C 1768 180 1660 70 1480 62 C 1360 56 1240 60 1180 90 Z" fill="#1B6B40"/>
-          <path d="M1160 160 C 1320 48 1640 58 1748 160" fill="#14633A"/>
-          <ellipse cx="1460" cy="158" rx="210" ry="34" fill="#0E4A32"/>
-          <path d="M1300 148 Q1460 214 1640 144" stroke="#F6E455" stroke-width="8" fill="none" stroke-linecap="round"/>
-          <rect x="1288" y="156" width="76" height="52" rx="6" fill="#C4312E"/>
-          <rect x="1376" y="136" width="92" height="64" rx="6" fill="#F6E455"/>
-          <path d="M1422 136 V200 M1376 168 H1468" stroke="#C4312E" stroke-width="5"/>
-          <rect x="1488" y="164" width="72" height="50" rx="6" fill="#213C70"/>
-          <path d="M1524 164 V214 M1488 190 H1560" stroke="#F6E455" stroke-width="4"/>
-          <ellipse cx="760" cy="640" rx="700" ry="26" fill="#F7FBFF"/>
-        </svg>
-        <div class="sack-logos">
-          <span class="badge"><img src="assets/brands/klein.png" alt="Klein Tools"></span>
-          <span class="badge"><img src="assets/brands/ocs.jpg" alt="OCS Industries"></span>
-          <span class="badge"><img src="assets/brands/rms.jpg" alt="RMS, Rainwater Management Solutions"></span>
-          <span class="badge"><img src="assets/brands/oetiker.svg" alt="Oetiker"></span>
-          <span class="badge"><img src="assets/brands/endot.jpg" alt="Endot"></span>
-          <span class="badge"><img src="assets/brands/ideal-tridon.jpg" alt="Ideal Tridon"></span>
-        </div>
-      </div>
-    </section>
-
-    <section class="scene scene-presents" data-scene="presents">
-      <div class="copy">
-        <p class="kicker">Under the tree</p>
-        <h1>Wrapped with care</h1>
-        <p class="lead">Partner logos on the packages.</p>
-      </div>
-      <div class="present-stage">
-        <div class="present-row">
-          <div class="gift red g1"><span class="ribbon v"></span><span class="ribbon h"></span><span class="bow"></span><span class="badge"><img src="assets/brands/armstrong.jpg" alt="Armstrong"></span></div>
-          <div class="gift green g2"><span class="ribbon v"></span><span class="ribbon h"></span><span class="bow"></span><span class="badge"><img src="assets/brands/fayette.jpg" alt="Fayette Pipe"></span></div>
-          <div class="gift navy g3"><span class="ribbon v"></span><span class="ribbon h"></span><span class="bow"></span><span class="badge"><img src="assets/brands/fernco.jpg" alt="Fernco"></span></div>
-          <div class="gift gold g4"><span class="ribbon v"></span><span class="ribbon h"></span><span class="bow"></span><span class="badge"><img src="assets/brands/armacell.jpg" alt="Armacell"></span></div>
-          <div class="gift red g5"><span class="ribbon v"></span><span class="ribbon h"></span><span class="bow"></span><span class="badge"><img src="assets/brands/matco-norca.png" alt="Matco-Norca"></span></div>
-          <div class="gift green g6"><span class="ribbon v"></span><span class="ribbon h"></span><span class="bow"></span><span class="badge"><img src="assets/brands/panasonic.svg" alt="Panasonic"></span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="scene scene-stockings" data-scene="stockings">
-      <div class="copy">
-        <p class="kicker">By the fire</p>
-        <h1>Hung with care</h1>
-        <p class="lead">Merry Christmas from the DGI team.</p>
-      </div>
-      <div class="mantel-wrap">
-        <div class="mantel-bar" aria-hidden="true"></div>
-        <div class="opening">
-          <div class="fire" aria-hidden="true">
-            <div class="fireglow"></div>
-            <div class="flames"><i></i><i></i><i></i></div>
-          </div>
-          <div class="stock-row" aria-hidden="true">
-            <div class="stocking red"><div class="cuff"></div><div class="leg"></div><div class="foot"></div><div class="heel"></div></div>
-            <div class="stocking green"><div class="cuff"></div><div class="leg"></div><div class="foot"></div><div class="heel"></div></div>
-            <div class="stocking navy"><div class="cuff"></div><div class="leg"><span>DGI</span></div><div class="foot"></div><div class="heel"></div></div>
-            <div class="stocking red"><div class="cuff"></div><div class="leg"></div><div class="foot"></div><div class="heel"></div></div>
-            <div class="stocking green"><div class="cuff"></div><div class="leg"></div><div class="foot"></div><div class="heel"></div></div>
-            <div class="stocking gold"><div class="cuff"></div><div class="leg"></div><div class="foot"></div><div class="heel"></div></div>
-          </div>
+        <h1 class="line">Merry Christmas</h1>
+        <p class="lead line">from David Gooding Inc.</p>
+        <div class="logo-plate line">
+          <img class="dgi" src="assets/dgi-logo.png" width="190" height="68" alt="David Gooding Inc.">
         </div>
       </div>
     </section>
 
     <section class="scene scene-partners" data-scene="partners">
+      <div class="photo kb-b" aria-hidden="true"><img src="assets/photos/boston.jpg" alt=""></div>
+      <div class="veil" aria-hidden="true"></div>
       <div class="copy">
-        <p class="kicker">New England line card</p>
-        <h1>Thanks to our partners</h1>
-        <p class="sub">David Gooding Inc.</p>
+        <p class="kicker line">David Gooding Inc.</p>
+        <h1 class="line">Thank you to our partners</h1>
       </div>
-      <div class="logo-wall">
+      <div class="logo-wall line">
         <span class="badge"><img src="assets/brands/armacell.jpg" alt="Armacell"></span>
         <span class="badge"><img src="assets/brands/armstrong.jpg" alt="Armstrong"></span>
         <span class="badge"><img src="assets/brands/elbi.jpg" alt="Elbi of America"></span>
@@ -227,118 +58,50 @@
       </div>
     </section>
 
-    <section class="scene scene-navien split" data-scene="navien">
-      <div class="art">
-        <div class="wreath-wrap">
-          <svg class="wreath" viewBox="0 0 640 640" aria-hidden="true">
-            <g fill="#0E4A32">
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(0 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(30 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(60 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(90 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(120 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(150 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(180 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(210 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(240 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(270 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(300 320 320)"/>
-              <ellipse cx="320" cy="48" rx="36" ry="18" transform="rotate(330 320 320)"/>
-            </g>
-            <g fill="#146B40">
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(0 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(30 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(60 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(90 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(120 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(150 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(180 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(210 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(240 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(270 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(300 320 320)"/>
-              <ellipse cx="320" cy="66" rx="32" ry="16" transform="rotate(330 320 320)"/>
-            </g>
-            <g fill="#1B6B40">
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(15 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(45 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(75 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(105 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(135 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(165 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(195 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(225 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(255 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(285 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(315 320 320)"/>
-              <ellipse cx="320" cy="86" rx="28" ry="14" transform="rotate(345 320 320)"/>
-            </g>
-            <g fill="#C4312E">
-              <circle cx="150" cy="180" r="11"/>
-              <circle cx="490" cy="190" r="11"/>
-              <circle cx="120" cy="340" r="10"/>
-              <circle cx="520" cy="360" r="10"/>
-              <circle cx="210" cy="500" r="11"/>
-              <circle cx="450" cy="500" r="11"/>
-              <circle cx="320" cy="78" r="9"/>
-            </g>
-            <path d="M230 548 Q320 492 410 548 Q358 586 320 556 Q282 586 230 548" fill="#C4312E"/>
-            <circle cx="320" cy="548" r="16" fill="#F6E455"/>
-            <path d="M292 560 Q250 630 318 600 Q292 578 304 562" fill="#C4312E"/>
-            <path d="M348 560 Q392 630 328 598 Q356 576 346 560" fill="#C4312E"/>
-          </svg>
-          <div class="logo-plate navien-plate">
-            <img src="assets/navien-logo.png" width="482" height="82" alt="Navien">
-          </div>
-        </div>
-      </div>
+    <section class="scene scene-warm" data-scene="warm">
+      <div class="photo kb-c" aria-hidden="true"><img src="assets/photos/window.jpg" alt=""></div>
+      <div class="veil" aria-hidden="true"></div>
       <div class="copy">
-        <p class="kicker">Line card</p>
-        <h1>Navien</h1>
-        <p class="lead">Warm wishes this Christmas.</p>
-        <p class="sub">On the David Gooding Inc. line card.</p>
+        <p class="kicker line">David Gooding Inc.</p>
+        <h1 class="line">Keeping New England<br>warm this season</h1>
       </div>
     </section>
 
-    <section class="scene scene-wecare split" data-scene="wecare">
-      <div class="art">
-        <div class="mark-plate">
-          <img src="assets/dgi-mark.png" width="233" height="250" alt="David Gooding Inc.">
-        </div>
-      </div>
+    <section class="scene scene-care" data-scene="care">
+      <div class="photo kb-d" aria-hidden="true"><img src="assets/photos/stockings.jpg" alt=""></div>
+      <div class="veil" aria-hidden="true"></div>
       <div class="copy">
-        <p class="kicker">Since 1980</p>
-        <h1>We Care.</h1>
-        <p class="lead">Thank you to our customers.</p>
-        <ul class="pills">
+        <p class="kicker line">David Gooding Inc.</p>
+        <h1 class="line">We Care.</h1>
+        <p class="lead line">Thank you to our customers.</p>
+        <ul class="pills line">
           <li>Dedication</li>
           <li>Gratitude</li>
           <li>Integrity</li>
         </ul>
-        <p class="sub">Happy holidays from the David Gooding Inc. team. Headquartered in Brockton, Massachusetts.</p>
       </div>
     </section>
 
     <section class="scene scene-contact" data-scene="contact">
+      <div class="photo kb-e" aria-hidden="true"><img src="assets/photos/street.jpg" alt=""></div>
+      <div class="veil" aria-hidden="true"></div>
       <div class="copy">
-        <div class="card">
-          <div class="card-logos">
-            <img class="dgi" src="assets/dgi-logo.png" width="190" height="68" alt="David Gooding Inc.">
-          </div>
+        <div class="card line">
+          <img class="dgi" src="assets/dgi-logo.png" width="190" height="68" alt="David Gooding Inc.">
           <p class="kicker">Brockton, Massachusetts</p>
           <h1>David Gooding Inc.</h1>
           <p class="addr">173 Spark Street<br>Brockton, MA 02302</p>
           <p class="phone">508-894-2000</p>
           <p class="web">goodingd.com</p>
-          <p class="hours">Customer service weekdays, 7 AM to 5 PM. Closed Saturday and Sunday.</p>
-          <p class="sub">Merry Christmas from the DGI team.</p>
+          <p class="hours">Weekdays, 7 AM to 5 PM. Closed Saturday and Sunday.</p>
         </div>
       </div>
     </section>
 
+    <div id="snow" aria-hidden="true"></div>
     <div id="countdown" aria-live="off"></div>
     <div id="progress" aria-hidden="true"><span id="bar"></span></div>
   </main>
-  <script src="app.js?v=20261029b"></script>
+  <script src="app.js?v=20261029c"></script>
 </body>
 </html>

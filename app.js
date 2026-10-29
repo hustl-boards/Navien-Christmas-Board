@@ -1,6 +1,7 @@
 /* David Gooding Inc. Christmas board.
-   One interval for the life of the page. Snow, lights, and scene motion
-   are a fixed set of elements driven by CSS. Nothing grows the DOM. */
+   One interval for the life of the page. Photos, snow, and type are a
+   fixed set of elements. Motion is CSS. Nothing grows the DOM.
+   Images and fonts are local. The page does not call the network. */
 (function () {
   var params = new URLSearchParams(location.search);
 
@@ -13,7 +14,7 @@
     return n;
   }
 
-  var sceneMs = num('sceneMs', 14000, 400, 120000);
+  var sceneMs = num('sceneMs', 15000, 400, 120000);
   var reloadHours = num('reload', 4, 0, 168);
   var hold = params.get('hold') === '1';
   var debug = params.get('debug') === '1';
@@ -304,37 +305,20 @@
   function buildSnow() {
     var root = document.getElementById('snow');
     var i, el, size;
-    for (i = 0; i < 36; i++) {
+    for (i = 0; i < 22; i++) {
       el = document.createElement('i');
       el.className = 'flake';
-      size = 5 + (i % 6) * 3;
+      size = 4 + (i % 4) * 2;
       el.style.width = size + 'px';
       el.style.height = size + 'px';
-      el.style.left = ((i * 23) % 100) + '%';
-      el.style.animationDuration = (11 + (i % 9)) + 's';
-      el.style.animationDelay = (-i * 0.83) + 's';
-      el.style.opacity = String(0.4 + (i % 5) * 0.12);
-      el.style.setProperty('--drift', ((i % 7) - 3) * 18 + 'px');
+      el.style.left = ((i * 29) % 100) + '%';
+      el.style.animationDuration = (16 + (i % 8)) + 's';
+      el.style.animationDelay = (-i * 1.15) + 's';
+      el.style.opacity = String(0.35 + (i % 4) * 0.12);
+      el.style.setProperty('--drift', ((i % 5) - 2) * 14 + 'px');
       root.appendChild(el);
     }
-    flakeCount = 36;
-  }
-
-  function buildStars() {
-    var root = document.getElementById('stars');
-    var i, el, size;
-    for (i = 0; i < 28; i++) {
-      el = document.createElement('i');
-      el.className = 'star';
-      size = 2 + (i % 3);
-      el.style.width = size + 'px';
-      el.style.height = size + 'px';
-      el.style.left = ((i * 37) % 100) + '%';
-      el.style.top = ((i * 17) % 62) + '%';
-      el.style.animationDuration = (1.8 + (i % 5) * 0.35) + 's';
-      el.style.animationDelay = (-i * 0.27) + 's';
-      root.appendChild(el);
-    }
+    flakeCount = 22;
   }
 
   function startClock() {
@@ -380,7 +364,6 @@
     board.appendChild(debugEl);
   }
 
-  try { buildStars(); } catch (e1) { note(e1); }
   try { buildSnow(); } catch (e2) { note(e2); }
   try {
     show(startIndex());

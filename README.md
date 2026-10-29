@@ -4,24 +4,20 @@ A static holiday slideshow for an office TV. It is a gift from Ross Hunt at 3R P
 
 Open the GitHub Pages URL full screen on the TV browser. There is no build step. `index.html`, `styles.css`, `app.js`, and `assets/` are the whole site.
 
-The picture is a 1920×1080 stage that scales to the screen. Scenes change about every 14 seconds. A countdown in the top-right corner counts days, hours, minutes, and seconds to midnight at the start of December 25 in America/New_York, no matter what timezone the TV is set to. On December 25 it reads “Merry Christmas from DGI!” After that day it counts toward the next Christmas.
+The picture is a 1920×1080 stage that scales to the screen. Slides change about every 15 seconds with a slow crossfade. Photos drift with a light Ken Burns move, and a few snowflakes fall over the picture. A countdown in the top-right corner counts days, hours, minutes, and seconds to midnight at the start of December 25 in America/New_York, no matter what timezone the TV is set to. On December 25 it reads “Merry Christmas from DGI!” After that day it counts toward the next Christmas.
 
-The page keeps a single timer, reuses the same snowflakes, and reloads itself every few hours so a TV browser can leave it up. Scene motion is CSS on a fixed set of elements, and it pauses when a scene is hidden.
+The page keeps a single timer, reuses the same snowflakes, and reloads itself about every 4 hours so a TV browser can leave it up. Photos, type, and snow are a fixed set of elements. Nothing on the page requests the network after it loads. Photo sources are listed in `CREDITS.md`.
 
-## Scenes
+## Slides
 
-1. Merry Christmas from David Gooding Inc.
-2. Christmas tree with line-card logos as ornaments
-3. Santa, sleigh, and reindeer, with logos on the gift sack
-4. Wrapped presents with partner logos
-5. Stockings by the fire
-6. Thanks to our partners — the New England line card
-7. Navien, one scene
-8. We Care. — a thank-you to customers
-9. Brockton contact: 508-894-2000 and goodingd.com
+1. Merry Christmas from David Gooding Inc., over a decorated tree and fireplace, with the DGI logo.
+2. Thank you to our partners — line-card logos on white badges, over a snowy Boston Christmas street.
+3. Keeping New England warm this season. A warm window in the snow. No product claims.
+4. We Care. A holiday thank-you to customers.
+5. Brockton contact: 173 Spark Street, 508-894-2000, goodingd.com. Weekdays, 7 AM to 5 PM. Closed Saturday and Sunday.
 
-Partner marks are the line-card logos, each on a white badge. The board does not mention pricing or after-hours coverage. Customer service on the contact scene is weekdays, 7 AM to 5 PM, closed Saturday and Sunday.
+The board does not mention pricing, same-day service, or around-the-clock coverage.
 
-Arrow keys move between scenes. `?sceneMs=` changes how long each scene stays (milliseconds). `?reload=` is the number of hours between reloads (`0` turns that off). `?scene=` opens on that scene, and `?hold=1` keeps it there.
+Arrow keys move between slides. `?sceneMs=` changes how long each slide stays (milliseconds). `?reload=` is the number of hours between reloads (`0` turns that off). `?scene=` opens on that slide, and `?hold=1` keeps it there.
 
-Outfit is used under the SIL Open Font License. See `assets/fonts/OFL.txt`. Logos are the David Gooding, Inc. mark and the manufacturers' line-card marks used for this office display.
+Outfit is used under the SIL Open Font License. See `assets/fonts/OFL.txt`.
