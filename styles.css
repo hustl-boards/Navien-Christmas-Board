@@ -38,6 +38,9 @@ html, body {
   cursor: none;
 }
 img { display: block; max-width: 100%; border: 0; }
+img.is-broken { visibility: hidden; }
+.badge.is-broken,
+.logo-plate.is-broken { display: none; }
 
 #board {
   position: absolute;
@@ -88,7 +91,6 @@ img { display: block; max-width: 100%; border: 0; }
   animation-iteration-count: infinite;
   animation-direction: alternate;
   animation-play-state: paused;
-  will-change: transform;
 }
 .kb-a img { animation-name: kbA; }
 .kb-b img { animation-name: kbB; }

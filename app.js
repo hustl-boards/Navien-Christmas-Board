@@ -1,7 +1,7 @@
 /* David Gooding Inc. Christmas board.
-   One interval for the life of the page. Photos, snow, and type are a
-   fixed set of elements. Motion is CSS. Nothing grows the DOM.
-   Images and fonts are local. The page does not call the network. */
+   One interval and one watchdog timeout for the life of the page.
+   Photos, snow, and type are a fixed set of elements. Motion is CSS.
+   Nothing grows the DOM. Images and fonts are local. */
 (function () {
   var params = new URLSearchParams(location.search);
 
@@ -15,11 +15,14 @@
   }
 
   var sceneMs = num('sceneMs', 15000, 400, 120000);
-  var reloadHours = num('reload', 4, 0, 168);
+  var reloadHours = num('reload', 6, 0, 168);
   var hold = params.get('hold') === '1';
   var debug = params.get('debug') === '1';
   var TICK_MS = 100;
+  var WATCH_PAD_MS = 8000;
   var HARD_EXTRA_MS = 15 * 60 * 1000;
+  var MAX_FLAKES = 22;
+  var DAY_MS = 86400000;
 
   var board = document.getElementById('board');
   var countdown = document.getElementById('countdown');
@@ -42,13 +45,17 @@
   var reloading = false;
   var shownCountdown = '';
   var clock = 0;
+  var watchTimer = 0;
   var wakeLock = null;
+  var wakePending = false;
   var lastWake = 0;
   var fitW = 0;
   var fitH = 0;
   var debugEl = null;
   var lastDebug = 0;
   var flakeCount = 0;
+  var showDepth = 0;
+  var preloaded = Object.create(null);
 
   var api = {
     index: 0,
@@ -79,18 +86,34 @@
     return 0;
   }
 
+  // One formatter for the life of the page. America/New_York, calendar and clock.
   var nyFmt = null;
-  function nyParts(date) {
+  var nyFmtFailed = false;
+  function clockFmt() {
+    if (nyFmt || nyFmtFailed) return nyFmt;
     try {
-      if (!nyFmt) {
-        nyFmt = new Intl.DateTimeFormat('en-US', {
-          timeZone: 'America/New_York',
-          year: 'numeric',
-          month: '2-digit',
-          day: '2-digit'
-        });
-      }
-      var bits = nyFmt.formatToParts(date);
+      nyFmt = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/New_York',
+        hourCycle: 'h23',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    } catch (e) {
+      nyFmtFailed = true;
+      nyFmt = null;
+    }
+    return nyFmt;
+  }
+
+  function nyParts(date) {
+    var fmt = clockFmt();
+    if (!fmt) return { y: date.getFullYear(), m: date.getMonth() + 1, d: date.getDate() };
+    try {
+      var bits = fmt.formatToParts(date);
       return { y: part(bits, 'year'), m: part(bits, 'month'), d: part(bits, 'day') };
     } catch (e) {
       return { y: date.getFullYear(), m: date.getMonth() + 1, d: date.getDate() };
@@ -102,21 +125,8 @@
   function wallClockUtc(y, m, d, h, mi, s) {
     var want = Date.UTC(y, m - 1, d, h, mi, s);
     var utc = want;
-    var fmt;
-    try {
-      fmt = new Intl.DateTimeFormat('en-US', {
-        timeZone: 'America/New_York',
-        hourCycle: 'h23',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
-    } catch (e) {
-      return Date.UTC(y, m - 1, d, h + 5, mi, s);
-    }
+    var fmt = clockFmt();
+    if (!fmt) return Date.UTC(y, m - 1, d, h + 5, mi, s);
     try {
       var n;
       for (n = 0; n < 4; n++) {
@@ -143,10 +153,11 @@
 
   var christmasStartCache = Object.create(null);
   function christmasStart(year) {
-    if (christmasStartCache[year] == null) {
-      christmasStartCache[year] = wallClockUtc(year, 12, 25, 0, 0, 0);
+    var key = String(year);
+    if (christmasStartCache[key] == null) {
+      christmasStartCache[key] = wallClockUtc(year, 12, 25, 0, 0, 0);
     }
-    return christmasStartCache[year];
+    return christmasStartCache[key];
   }
 
   function frozenNow() {
@@ -164,10 +175,18 @@
 
   function countdownMessage(ms) {
     var parts = nyParts(new Date(ms));
-    if (parts.m === 12 && parts.d === 25) return 'Merry Christmas from DGI!';
     var year = parts.y;
-    if (parts.m === 12 && parts.d > 25) year += 1;
-    var left = christmasStart(year) - ms;
+    var target = christmasStart(year);
+    // Christmas day runs from midnight to the next midnight in New York.
+    // After that, including across New Year, count to the next December 25.
+    if ((parts.m === 12 && parts.d === 25) || (ms >= target && ms < target + DAY_MS)) {
+      return 'Merry Christmas from DGI!';
+    }
+    if (ms >= target) {
+      year += 1;
+      target = christmasStart(year);
+    }
+    var left = target - ms;
     if (left < 0) left = 0;
     var total = Math.floor(left / 1000);
     var days = Math.floor(total / 86400);
@@ -193,18 +212,70 @@
     api.flakes = flakeCount;
   }
 
-  function show(n) {
-    if (!scenes.length) return;
-    index = ((n % scenes.length) + scenes.length) % scenes.length;
+  function sceneAlive(scene) {
+    return scene && scene.getAttribute('data-dead') !== '1';
+  }
+
+  function livingCount() {
+    var n = 0;
     var i;
-    for (i = 0; i < scenes.length; i++) {
-      if (i === index) scenes[i].classList.add('is-active');
-      else scenes[i].classList.remove('is-active');
+    for (i = 0; i < scenes.length; i++) if (sceneAlive(scenes[i])) n++;
+    return n;
+  }
+
+  function clearWatchdog() {
+    if (!watchTimer) return;
+    clearTimeout(watchTimer);
+    watchTimer = 0;
+  }
+
+  function onWatchdog() {
+    watchTimer = 0;
+    if (reloading || hold) return;
+    note('watchdog');
+    if (!clock) startClock();
+    if (reloadDue && tryReload('scheduled')) return;
+    show(index + 1);
+  }
+
+  function armWatchdog() {
+    clearWatchdog();
+    if (hold || reloading || !scenes.length) return;
+    var delay = sceneStarted + sceneMs + WATCH_PAD_MS - Date.now();
+    if (delay < 500) delay = 500;
+    watchTimer = setTimeout(onWatchdog, delay);
+  }
+
+  function show(n, dir) {
+    if (!scenes.length || showDepth > scenes.length) return;
+    showDepth += 1;
+    try {
+      var count = scenes.length;
+      var step = dir === -1 ? -1 : 1;
+      var start = ((n % count) + count) % count;
+      var i = start;
+      var guard = 0;
+      var living = livingCount();
+      if (living > 0) {
+        while (!sceneAlive(scenes[i]) && guard < count) {
+          i = (i + step + count) % count;
+          guard += 1;
+        }
+      }
+      index = i;
+      var s;
+      for (s = 0; s < count; s++) {
+        if (s === index) scenes[s].classList.add('is-active');
+        else scenes[s].classList.remove('is-active');
+      }
+      board.setAttribute('data-scene', scenes[index].getAttribute('data-scene') || 'greet');
+      sceneStarted = Date.now();
+      bar.style.transform = 'scaleX(0)';
+      publish();
+      armWatchdog();
+    } finally {
+      showDepth -= 1;
     }
-    board.setAttribute('data-scene', scenes[index].getAttribute('data-scene') || 'greet');
-    sceneStarted = Date.now();
-    bar.style.transform = 'scaleX(0)';
-    publish();
   }
 
   function startIndex() {
@@ -221,6 +292,14 @@
     return 0;
   }
 
+  function clearTimers() {
+    if (clock) {
+      clearInterval(clock);
+      clock = 0;
+    }
+    clearWatchdog();
+  }
+
   function tryReload(reason) {
     if (reloading) return true;
     if (navigator.onLine === false) {
@@ -235,12 +314,21 @@
     }
     reloading = true;
     pendingReload = '';
+    clearTimers();
     store.set('dgi_reload_at', String(Date.now()));
     store.set('dgi_reason', reason);
     if (scenes.length) store.set('dgi_next', String((index + 1) % scenes.length));
     var url = new URL(location.href);
     url.searchParams.set('r', String(Date.now()));
-    location.replace(url.toString());
+    try {
+      location.replace(url.toString());
+    } catch (e) {
+      reloading = false;
+      note(e && e.message ? e.message : e);
+      startClock();
+      armWatchdog();
+      return false;
+    }
     return true;
   }
 
@@ -255,15 +343,21 @@
   }
 
   function pokeWake(now) {
-    if (now - lastWake < 60000) return;
+    if (wakePending || now - lastWake < 60000) return;
     lastWake = now;
     try {
       if (!navigator.wakeLock || document.hidden) return;
       if (wakeLock && wakeLock.released === false) return;
+      wakePending = true;
       navigator.wakeLock.request('screen').then(function (lock) {
         wakeLock = lock;
-      }).catch(function () {});
-    } catch (e) {}
+        wakePending = false;
+      }).catch(function () {
+        wakePending = false;
+      });
+    } catch (e) {
+      wakePending = false;
+    }
   }
 
   function paintDebug(now) {
@@ -304,8 +398,11 @@
 
   function buildSnow() {
     var root = document.getElementById('snow');
-    var i, el, size;
-    for (i = 0; i < 22; i++) {
+    var have, i, el, size;
+    if (!root) return;
+    while (root.children.length > MAX_FLAKES) root.removeChild(root.lastChild);
+    have = root.children.length;
+    for (i = have; i < MAX_FLAKES; i++) {
       el = document.createElement('i');
       el.className = 'flake';
       size = 4 + (i % 4) * 2;
@@ -318,7 +415,63 @@
       el.style.setProperty('--drift', ((i % 5) - 2) * 14 + 'px');
       root.appendChild(el);
     }
-    flakeCount = 22;
+    flakeCount = root.children.length;
+  }
+
+  function onImageError(img) {
+    var badge, plate, photo, scene;
+    if (!img || img.getAttribute('data-failed') === '1') return;
+    img.setAttribute('data-failed', '1');
+    img.classList.add('is-broken');
+    if (!img.closest) return;
+    badge = img.closest('.badge');
+    if (badge) badge.classList.add('is-broken');
+    plate = img.closest('.logo-plate');
+    if (plate) plate.classList.add('is-broken');
+    photo = img.closest('.photo');
+    scene = img.closest ? img.closest('.scene') : null;
+    if (!photo || !scene) return;
+    scene.setAttribute('data-dead', '1');
+    photo.classList.add('is-fallback');
+    if (scene.classList.contains('is-active') && livingCount() > 0) show(index + 1);
+  }
+
+  function watchImage(img) {
+    var src, raster;
+    if (!img || img.getAttribute('data-watch') === '1') return;
+    img.setAttribute('data-watch', '1');
+    src = img.getAttribute('src') || '';
+    if (src && !preloaded[src]) {
+      preloaded[src] = 1;
+      if (img.decode) {
+        try {
+          var decoded = img.decode();
+          if (decoded && decoded.catch) decoded.catch(function () {});
+        } catch (e) {}
+      }
+    }
+    function onError() {
+      img.removeEventListener('error', onError);
+      img.removeEventListener('load', onLoad);
+      onImageError(img);
+    }
+    function onLoad() {
+      img.removeEventListener('error', onError);
+      img.removeEventListener('load', onLoad);
+    }
+    img.addEventListener('error', onError);
+    img.addEventListener('load', onLoad);
+    if (!img.complete) return;
+    img.removeEventListener('error', onError);
+    img.removeEventListener('load', onLoad);
+    raster = !/\.svg($|\?)/i.test(src);
+    if (raster && !(img.naturalWidth > 0)) onImageError(img);
+  }
+
+  function preloadImages() {
+    var imgs = document.getElementsByTagName('img');
+    var i;
+    for (i = 0; i < imgs.length; i++) watchImage(imgs[i]);
   }
 
   function startClock() {
@@ -337,6 +490,7 @@
   document.addEventListener('visibilitychange', function () {
     if (document.hidden) return;
     lastWake = 0;
+    wakePending = false;
     paintCountdown();
   });
 
@@ -347,12 +501,19 @@
       show(index + 1);
     } else if (key === 'ArrowLeft') {
       e.preventDefault();
-      show(index - 1);
+      show(index - 1, -1);
     }
   });
 
   window.addEventListener('online', function () {
     if (pendingReload) tryReload(pendingReload);
+  });
+
+  window.addEventListener('pagehide', clearTimers);
+  window.addEventListener('pageshow', function (ev) {
+    if (!ev.persisted || reloading) return;
+    startClock();
+    armWatchdog();
   });
 
   if (!store.get('dgi_since')) store.set('dgi_since', String(Date.now()));
@@ -365,6 +526,7 @@
   }
 
   try { buildSnow(); } catch (e2) { note(e2); }
+  try { preloadImages(); } catch (eImg) { note(eImg); }
   try {
     show(startIndex());
     paintCountdown();

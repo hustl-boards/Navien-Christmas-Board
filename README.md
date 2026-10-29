@@ -1,12 +1,12 @@
 # DGI Christmas Board
 
-A static holiday slideshow for an office TV. It is a gift from Ross Hunt at 3R Plumbing & Mechanical for David Gooding, Inc. in Brockton, Massachusetts.
+A static holiday slideshow for the David Gooding, Inc. office TV in Brockton, Massachusetts.
 
 Open the GitHub Pages URL full screen on the TV browser. There is no build step. `index.html`, `styles.css`, `app.js`, and `assets/` are the whole site.
 
 The picture is a 1920×1080 stage that scales to the screen. Slides change about every 15 seconds with a slow crossfade. Photos drift with a light Ken Burns move, and a few snowflakes fall over the picture. A countdown in the top-right corner counts days, hours, minutes, and seconds to midnight at the start of December 25 in America/New_York, no matter what timezone the TV is set to. On December 25 it reads “Merry Christmas from DGI!” After that day it counts toward the next Christmas.
 
-The page keeps a single timer, reuses the same snowflakes, and reloads itself about every 4 hours so a TV browser can leave it up. Photos, type, and snow are a fixed set of elements. Nothing on the page requests the network after it loads. Photo sources are listed in `CREDITS.md`.
+The page keeps a single timer, reuses the same snowflakes, skips a slide whose photo fails to load, and reloads itself about every 6 hours when the TV is online so a browser can leave it up. Photos, type, and snow are a fixed set of elements. Nothing on the page requests the network after it loads. Photo sources are listed in `CREDITS.md`.
 
 ## Slides
 
